@@ -1,6 +1,6 @@
 import java.util.Date;
 enum Status {AGENDADA, CANCELADA, TERMINADA};
-public class Citas {
+public class Cita {
     private Date fecha;
     private Doctor doctor;
     private Paciente paciente;
