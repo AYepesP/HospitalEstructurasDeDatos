@@ -11,7 +11,7 @@ public class Cita {
     private String seguro;
     private String notasAdicionales;
 
-    public Cita (Date fecha, Doctor doc, Paciente paciente) {
+    public Cita (Paciente paciente, Doctor doc, Date fecha) {
         this.fecha = fecha;
         this.doctor = doc;
         this.paciente = paciente;

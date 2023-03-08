@@ -16,14 +16,12 @@ public class Hospital {
 	}
 
 	public void addPaciente(String Nombre, int Edad, String CC) {
-
 		Paciente p = new Paciente(Nombre, Edad, CC);
 		Pacientes = Arrays.copyOf(Pacientes, Pacientes.length + 1);
 		Pacientes[Pacientes.length - 1] = p;
 	}
 
 	public void addDoctor(String Nombre, int Edad, String CC, String Especialidad) {
-
 		Doctor p = new Doctor(Nombre, CC, Edad, Especialidad);
 		Doctores = Arrays.copyOf(Doctores, Doctores.length + 1);
 		Doctores[Doctores.length - 1] = p;
@@ -35,8 +33,8 @@ public class Hospital {
 		Citas[Citas.length - 1] = p;
 	}
 
-	public void addMedicamento(String nombre, int cantidadMg, Date fechaVen, String codigo) {
-		Medicamento p = new Medicamento(nombre, cantidadMg, fechaVen, codigo);
+	public void addMedicamento(String nombre, int cantidadMg, String tipo, Date fechaVen, String codigo) {
+		Medicamento p = new Medicamento(nombre, cantidadMg, tipo, fechaVen, codigo);
 		Medicamentos = Arrays.copyOf(Medicamentos, Medicamentos.length + 1);
 		Medicamentos[Medicamentos.length - 1] = p;
 	}

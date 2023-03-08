@@ -2,13 +2,14 @@ public class Doctor {
 	
 	private String Nombre;
 	private int Edad;
-	private String Documento;
+	private String CC;
 	private String Especialidad;
 	
-	public Doctor (String Nombre, String Documento, String Especialidad) {
+	public Doctor (String Nombre, String CC, int Edad, String Especialidad) {
 		this.Nombre=Nombre;
-		this.Documento=Documento;
+		this.CC=CC;
 		this.Especialidad=Especialidad;
+		this.Edad = Edad;
 	}
 
 	public String getNombre() {
@@ -27,12 +28,12 @@ public class Doctor {
 		Edad = edad;
 	}
 
-	public String getDocumento() {
-		return Documento;
+	public String getCC() {
+		return CC;
 	}
 
-	public void setDocumento(String documento) {
-		Documento = documento;
+	public void setCC(String CC) {
+		this.CC = CC;
 	}
 
 	public String getEspecialidad() {
