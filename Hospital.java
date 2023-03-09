@@ -1,18 +1,18 @@
-package HospitalEstrucutraDeDatos;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class Hospital {
 
 	private Paciente[] Pacientes;
 	private Doctor[] Doctores;
-	private Cita[] Citas;
+	private ArrayList<Cita> Citas;
 	private Medicamento[] Medicamentos;
 
 	public Hospital(Paciente[] pacientes, Doctor[] doctores, Cita[] citas) {
 		Pacientes = new Paciente[0];
 		Doctores = new Doctor[0];
-		Citas = new Cita[0];
+		Citas = new ArrayList<Cita>();
 	}
 
 	public void addPaciente(String Nombre, int Edad, String CC) {
@@ -27,12 +27,68 @@ public class Hospital {
 		Doctores[Doctores.length - 1] = p;
 	}
 
-	public void addCita(Paciente paciente, Doctor doctor, Date fecha) {
+	public void addCita(Paciente paciente, Doctor doctor, LocalDateTime fecha) throws ENoExiste{
 		Cita p = new Cita(paciente, doctor, fecha);
-		Citas = Arrays.copyOf(Citas, Citas.length + 1);
-		Citas[Citas.length - 1] = p;
-	}
+		if (Citas.size() == 0) {
+			Citas.add(p);
+		}
+		else if(Citas.get(Citas.size()-1).getFecha().isAfter(fecha)) {
+			Citas.add(p);
+		}
+		else if (Citas.get(0).getFecha().isBefore(fecha)) {
+			Citas.add(0, p);
+		}
+		else {
+			int inicio = 0;
+			int fin = Citas.size();
+			int mitad = (fin + inicio) /2;
 
+			while (fin - inicio > 1) {
+				if (Citas.get(mitad).getDoctor().equals(doctor) && Citas.get(mitad).getFecha().isEqual(fecha)) {
+					throw new ENoExiste("Doctor ocupado a esta hora.  Porfavor intente otra hora");
+				}
+				else if(Citas.get(mitad).getFecha().isAfter(fecha)) {
+					inicio = mitad;
+					mitad = (fin + inicio)/2;
+				}
+				else if(Citas.get(mitad).getFecha().isBefore(fecha)) {
+					fin = mitad;
+					mitad = (fin + inicio)/2;
+				}
+			}
+			Citas.add(mitad +1, p);
+		}
+	}
+	public Cita buscarCita (Doctor doc, LocalDateTime fecha) throws Exception{
+        System.out.println(Citas.get(0).getFecha().isAfter(fecha));
+		if (doc == null) {
+            throw new Exception("El doctor no existe");
+        }
+        else if(Citas.get(Citas.size()-1).getFecha().isAfter(fecha)) {
+			throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");
+		}
+		else if(Citas.get(0).getFecha().isBefore(fecha)) {
+			throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");
+		}
+		int fin = Citas.size();
+        int inicio = 0;
+        int mitad = (fin + inicio)/2;
+
+		while(fin - inicio > 1) {
+			if (Citas.get(mitad).getDoctor().equals(doc) && Citas.get(mitad).getFecha().isEqual(fecha)) {
+				return Citas.get(mitad);
+			}
+			else if (Citas.get(mitad).getFecha().isAfter(fecha)) {
+				inicio = mitad;
+				mitad = (fin + inicio)/2;
+			}
+			else if(Citas.get(mitad).getFecha().isBefore(fecha)) {
+				fin = mitad;
+				mitad = (fin + inicio)/2;
+			}
+		}
+		throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");		
+	}
 	public void addMedicamento(String nombre, int cantidadMg, String tipo, Date fechaVen, String codigo) {
 		Medicamento p = new Medicamento(nombre, cantidadMg, tipo, fechaVen, codigo);
 		Medicamentos = Arrays.copyOf(Medicamentos, Medicamentos.length + 1);

@@ -1,7 +1,8 @@
+import java.time.LocalDateTime;
 import java.util.Date;
 enum Status {AGENDADA, CANCELADA, TERMINADA};
 public class Cita {
-    private Date fecha;
+    private LocalDateTime fecha;
     private Doctor doctor;
     private Paciente paciente;
     private String sintomas;
@@ -11,7 +12,7 @@ public class Cita {
     private String seguro;
     private String notasAdicionales;
 
-    public Cita (Paciente paciente, Doctor doc, Date fecha) {
+    public Cita (Paciente paciente, Doctor doc, LocalDateTime fecha) {
         this.fecha = fecha;
         this.doctor = doc;
         this.paciente = paciente;
@@ -20,12 +21,15 @@ public class Cita {
     }
 
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return this.fecha;
     }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    
+    public void setFecha(int año, int mes, int dia, int hora, int min) throws ENoExiste{
+        if(año<1900 || mes > 12 || mes<1 || dia<1 || dia>31 || hora<0 || hora> 24 || min <0 || min>60){
+            throw new ENoExiste("Fecha Invalida");
+        }
+        this.fecha = LocalDateTime.of(año, mes, dia, hora, min, min);
     }
 
     public Doctor getDoctor() {
