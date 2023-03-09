@@ -12,8 +12,8 @@ public class Cita {
     private String seguro;
     private String notasAdicionales;
 
-    public Cita (Paciente paciente, Doctor doc, LocalDateTime fecha) {
-        this.fecha = fecha;
+    public Cita (Paciente paciente, Doctor doc, LocalDateTime fecha) throws ENoExiste{
+        setFecha(fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth(), fecha.getHour(), fecha.getMinute());
         this.doctor = doc;
         this.paciente = paciente;
         this.estado = Status.AGENDADA;
