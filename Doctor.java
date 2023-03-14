@@ -24,8 +24,14 @@ public class Doctor {
 		return Edad;
 	}
 
-	public void setEdad(int edad) {
-		Edad = edad;
+	public void setEdad(int edad) throws ENoExiste{
+		if (edad > 0 && edad < 150) {
+			Edad = edad;
+		}
+		else {
+			throw new ENoExiste("Edad invalida");
+		}
+		
 	}
 
 	public String getCC() {
