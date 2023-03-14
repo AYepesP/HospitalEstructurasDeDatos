@@ -2,21 +2,28 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Medicamento {
+	private String codigo;
 	private String nombre;
 	private int cantidadMg;
 	private String tipo;
 	private Date fechaVencimiento;
 	private String CUM;
 	
-	public Medicamento(String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
+	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
 		super();
+		this.codigo = codigo;
 		this.nombre = nombre;
 		this.cantidadMg = cantidadMg;
 		this.tipo = tipo;
 		this.fechaVencimiento = fechaVencimiento;
 		CUM = cUM;
 	}
-
+	public String getCodigo () {
+		return this.codigo;
+	}
+	public void setCodigo (String codigo) {
+		this.codigo = codigo;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -80,8 +87,8 @@ class Hospital {
 	}
 
 
-	public 	void addMedicamento(String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
-		Medicamento newMed = new Medicamento(nombre, cantidadMg, tipo, fechaVencimiento, cUM);
+	public 	void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
+		Medicamento newMed = new Medicamento(codigo, nombre, cantidadMg, tipo, fechaVencimiento, cUM);
 		medicamentos=Arrays.copyOf(medicamentos, medicamentos.length+1);
 		medicamentos[medicamentos.length-1]=newMed;
 		

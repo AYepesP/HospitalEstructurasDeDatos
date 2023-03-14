@@ -10,9 +10,15 @@ public class Hospital {
 	private ArrayList<Cita> Citas;
 	private Medicamento[] Medicamentos;
 
-	public Hospital(Paciente[] pacientes, Doctor[] doctores, Cita[] citas) {
+	public Hospital() {
 		Pacientes = new Paciente[0];
 		Doctores = new Doctor[0];
+		Citas = new ArrayList<Cita>();
+	}
+	
+	public Hospital(Paciente[] pacientes, Doctor[] doctores) {
+		Pacientes = pacientes;
+		Doctores = doctores;
 		Citas = new ArrayList<Cita>();
 	}
 
@@ -90,8 +96,8 @@ public class Hospital {
 		}
 		throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");		
 	}
-	public void addMedicamento(String nombre, int cantidadMg, String tipo, Date fechaVen, String codigo) {
-		Medicamento p = new Medicamento(nombre, cantidadMg, tipo, fechaVen, codigo);
+	public void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVen) {
+		Medicamento p = new Medicamento(codigo, nombre, cantidadMg, tipo, fechaVen, codigo);
 		Medicamentos = Arrays.copyOf(Medicamentos, Medicamentos.length + 1);
 		Medicamentos[Medicamentos.length - 1] = p;
 	}
