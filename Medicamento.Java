@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.time.LocalDateTime;
 
 public class Medicamento {
-	private String codigo;
 	private String nombre;
 	private int cantidadMg;
 	private String tipo;
@@ -16,19 +15,34 @@ public class Medicamento {
 	
 	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVencimiento, String cUM) {
 		super();
-		this.codigo = codigo;
 		this.nombre = nombre;
 		this.cantidadMg = cantidadMg;
 		this.tipo = tipo;
 		this.fechaVencimiento = fechaVencimiento;
 		CUM = cUM;
 	}
-	public String getCodigo () {
-		return this.codigo;
+
+	public void writeObjeto(String adress) throws IOException {
+		FileOutputStream f = new FileOutputStream(adress);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
 	}
-	public void setCodigo (String codigo) {
-		this.codigo = codigo;
+
+	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
+		FileInputStream in = new FileInputStream(adress);
+		ObjectInputStream o = new ObjectInputStream(in);
+		Medicamento medicamento = (Medicamento) o.readObject();
+		this.nombre = medicamento.nombre;
+		this.cantidadMg = medicamento.cantidadMg;
+		this.tipo = medicamento.tipo;
+		this.fechaVencimiento = medicamento.fechaVencimiento;
+		this.CUM = medicamento.CUM;
+		o.close();
+		in.close();
 	}
+
 	public String getNombre() {
 		return nombre;
 	}

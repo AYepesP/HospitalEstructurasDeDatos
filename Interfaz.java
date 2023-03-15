@@ -27,7 +27,6 @@ public class Interfaz {
 	boolean Doctor = true;
 	boolean Paciente = true;
 	boolean Guardar = true;
-	private Medicamento[] Medicamentos;
 	private Hospital H = new Hospital();
 	private JFrame frame;
 	private JFrame AñadirDoctor;
@@ -35,18 +34,28 @@ public class Interfaz {
 	private JFrame BuscarPaciente;
 	private JFrame BuscarDoctor;
 	private JFrame ProgramarCita;
+	private JFrame Anadir;
+	private JFrame AñadirMedicamento;
 	private JComboBox Opciones;
 	private JTextField Cedula;
 	private JLabel PacienteL;
+	private JTextField txtEdadP;
+	private JTextField txtCedulaP;
+	private JTextField txtNombreP;
 	private JTextField txtEdad;
 	private JTextField txtCedula;
 	private JTextField txtNombre;
 	private JTextField txtEspecialidad;
 	private JLabel imPantalla;
-	private JTable table;
-	private JButton GuardaBuscar;
+	private JButton BuscarDoc;
+	private JButton BuscarPac;
+	private JButton GuardaDoc;
+	private JButton GuardaPac;
+	private JButton Buscar;
 	private JButton Volver;
-	
+	private JButton AnadirDoc;
+	private JButton AnadirPac;
+
 	DefaultTableModel ModeloTable = new DefaultTableModel();
 
 	public JFrame getFrame() {
@@ -120,24 +129,57 @@ public class Interfaz {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Cedula = new JTextField("Cedula");
 		Cedula.setOpaque(true);
+		txtCedulaP = new JTextField("Cedula");
+		txtEdadP = new JTextField("Edad");
+		txtNombreP = new JTextField("Nombre");
 		txtCedula = new JTextField("Cedula");
 		txtEdad = new JTextField("Edad");
 		txtNombre = new JTextField("Nombre");
 		txtEspecialidad = new JTextField("Especialidad");
-		
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		AñadirMedicamento = new JFrame();
+		AñadirMedicamento.getContentPane().setBackground(new Color(255, 255, 255));
+		AñadirMedicamento.setBounds(100, 100, 800, 550);
+		AñadirMedicamento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		AñadirMedicamento.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		AñadirMedicamento.setTitle("HOSPITAL");
+		AñadirMedicamento.getContentPane().setLayout(null);
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		Anadir = new JFrame();
+		Anadir.getContentPane().setBackground(new Color(255, 255, 255));
+		Anadir.setBounds(100, 100, 800, 550);
+		Anadir.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Anadir.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		Anadir.setTitle("HOSPITAL");
+		Anadir.getContentPane().setLayout(null);
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Volver = new JButton("Volver");
 		Volver.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		Volver.setBounds(70, 425, 130, 42);
-		GuardaBuscar = new JButton("Guardar");
-		GuardaBuscar.setBounds(589, 425, 130, 42);
-		GuardaBuscar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
+		BuscarDoc = new JButton("Guardar");
+		BuscarDoc.setBounds(589, 425, 130, 42);
+		BuscarDoc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		BuscarPac = new JButton("Guardar");
+		BuscarPac.setBounds(589, 425, 130, 42);
+		BuscarPac.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		Buscar = new JButton("Guardar");
+		Buscar.setBounds(589, 425, 130, 42);
+		Buscar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		GuardaPac = new JButton("Guardar");
+		GuardaPac.setBounds(589, 425, 130, 42);
+		GuardaPac.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		GuardaDoc = new JButton("Guardar");
+		GuardaDoc.setBounds(589, 425, 130, 42);
+		GuardaDoc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		AnadirDoc = new JButton("Añadir Doctor");
+		AnadirDoc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		AnadirDoc.setBounds(80, 187, 180, 42);
+		AnadirPac = new JButton("Añadir Paciente");
+		AnadirPac.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		AnadirPac.setBounds(540, 187, 180, 42);
+
 		Opciones = new JComboBox();
 		Opciones.setBounds(235, 90, 313, 47);
-
-		table = new JTable();
-		table.setBounds(103, 158, 359, 108);
-		frame.getContentPane().add(table);
 		ModeloTable.addColumn("Doctor");
 		ModeloTable.addColumn("Paciente");
 		ModeloTable.addColumn("Fecha");
@@ -161,19 +203,17 @@ public class Interfaz {
 					Paciente = false;
 				}
 				if (Opciones.getSelectedItem().equals("")) {
-					
 
-				}
-				if (Opciones.getSelectedItem().equals("Buscar Paciente")) {
-					
+				} else if (Opciones.getSelectedItem().equals("Buscar Paciente")) {
+
 					frame.setVisible(false);
 					BuscarPaciente.setVisible(true);
-					
+
 					BuscarPaciente.getContentPane().add(imPantalla);
 					Cedula.setBounds(45, 185, 313, 47);
 					BuscarPaciente.getContentPane().add(Cedula);
 					Cedula.setText("Cedula");
-					BuscarPaciente.getContentPane().add(GuardaBuscar);
+					BuscarPaciente.getContentPane().add(BuscarPac);
 					BuscarPaciente.getContentPane().add(Volver);
 					BuscarPaciente.getContentPane().add(imPantalla);
 					Cedula.addMouseListener(new MouseAdapter() {
@@ -181,10 +221,10 @@ public class Interfaz {
 							Cedula.setText("");
 						}
 					});
-					GuardaBuscar.setText("Buscar");
-					GuardaBuscar.addMouseListener(new MouseAdapter() {
+					BuscarPac.setText("Buscar");
+					BuscarPac.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							if (Cedula.getText() != "" && Guardar) {
+							if (Cedula.getText() != "") {
 								try {
 									imPantalla.setText(H.buscarPaciente(Cedula.getText()).toString());
 								} catch (ENoExiste e1) {
@@ -200,29 +240,26 @@ public class Interfaz {
 					frame.getContentPane().add(PacienteL);
 
 					PacienteL.setText("");
-				}
-				if (Opciones.getSelectedItem().equals("Buscar Doctor")) {
-					
+				} else if (Opciones.getSelectedItem().equals("Buscar Doctor")) {
+
 					frame.setVisible(false);
 					BuscarDoctor.setVisible(true);
-					
+
 					imPantalla.setText("");
 					Cedula.setBounds(45, 185, 313, 47);
 					BuscarDoctor.getContentPane().add(Cedula);
 					Cedula.setText("Cedula");
 					BuscarDoctor.getContentPane().add(imPantalla);
-					BuscarDoctor.getContentPane().add(GuardaBuscar);
+					BuscarDoctor.getContentPane().add(BuscarDoc);
 					BuscarDoctor.getContentPane().add(Volver);
-					
-					
-					GuardaBuscar.setText("Buscar");
+					BuscarDoc.setText("Buscar");
 					Volver.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							frame.setVisible(true);
 							AñadirDoctor.setVisible(false);
 						}
 					});
-					GuardaBuscar.addMouseListener(new MouseAdapter() {
+					BuscarDoc.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							if (Cedula.getText() != "") {
 								try {
@@ -234,99 +271,234 @@ public class Interfaz {
 						}
 					});
 				}
-				if (Opciones.getSelectedItem().equals("Añadir Paciente")) {
-					Guardar = true;
-					
-					AñadirPaciente.setVisible(true);
+
+				else if (Opciones.getSelectedItem().equals("Añadir")) {
+
+					Anadir.setVisible(true);
 					frame.setVisible(false);
-					
-					
-					txtNombre.setText("Nombre");
-					txtNombre.setBounds(45, 250, 215, 35);
-					AñadirPaciente.getContentPane().add(txtNombre);
 
-					txtEdad.setText("Edad");
-					txtEdad.setBounds(270, 250, 215, 35);
-					AñadirPaciente.getContentPane().add(txtEdad);
+					Anadir.getContentPane().add(AnadirPac);
+					Anadir.getContentPane().add(AnadirDoc);
+					Anadir.getContentPane().add(Volver);
 
-					txtCedula.setText("Cedula");
-					txtCedula.setBounds(495, 250, 215, 35);
-					AñadirPaciente.getContentPane().add(txtCedula);
-
-					GuardaBuscar.setText("Guardar");
-					AñadirPaciente.getContentPane().add(Volver);
-					AñadirPaciente.getContentPane().add(GuardaBuscar);
-					
 					Volver.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							frame.setVisible(true);
 							AñadirDoctor.setVisible(false);
 						}
 					});
-					GuardaBuscar.addMouseListener(new MouseAdapter() {
+					AnadirDoc.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							if (txtCedula.getText() != "" && txtEdad.getText() != "" && txtEspecialidad.getText() != ""
-									&& txtNombre.getText() != "" && Guardar) {
-								H.addPaciente(txtNombre.getText(), Integer.parseInt(txtEdad.getText()),
-										txtCedula.getText());
-								Guardar = false;
-							}
+
+							AñadirDoctor.setVisible(true);
+							Anadir.setVisible(false);
+							Guardar = true;
+
+							AñadirDoctor.getContentPane().add(GuardaDoc);
+							AñadirDoctor.getContentPane().add(Volver);
+
+							txtNombre.setText("Nombre");
+							txtNombre.setBounds(45, 250, 215, 35);
+							AñadirDoctor.getContentPane().add(txtNombre);
+
+							txtEdad.setText("Edad");
+							txtEdad.setBounds(270, 250, 215, 35);
+							AñadirDoctor.getContentPane().add(txtEdad);
+
+							txtCedula.setText("Cedula");
+							txtCedula.setBounds(495, 250, 215, 35);
+							AñadirDoctor.getContentPane().add(txtCedula);
+
+							txtEspecialidad.setText("Especialidad");
+							txtEspecialidad.setBounds(45, 310, 215, 35);
+							AñadirDoctor.getContentPane().add(txtEspecialidad);
+
+							Volver.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									frame.setVisible(true);
+									AñadirDoctor.setVisible(false);
+								}
+							});
+							GuardaDoc.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+
+									if ((txtCedula.getText() != "" || !txtCedula.getText().equals("Cedula"))
+											&& (txtEdad.getText() != "" || !txtEdad.getText().equals("Edad"))
+											&& (txtEspecialidad.getText() != ""
+													|| !txtEspecialidad.getText().equals("Especialidad"))
+											&& (txtNombre.getText() != "" || !txtNombre.getText().equals("Nombre"))
+											&& Guardar) {
+										H.addDoctor(txtNombre.getText(), txtCedula.getText(),
+												Integer.parseInt(txtEdad.getText()), txtEspecialidad.getText());
+										Guardar = false;
+									}
+								}
+							});
+							txtNombre.setText("Nombre");
+							txtEdad.setText("Edad");
+							txtCedula.setText("Cedula");
+							txtEspecialidad.setText("Especialidad");
+
+						}
+					});
+					AnadirPac.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							Guardar = true;
+
+							AñadirPaciente.setVisible(true);
+							frame.setVisible(false);
+
+							txtNombreP.setText("Nombre");
+							txtNombreP.setBounds(45, 250, 215, 35);
+							AñadirPaciente.getContentPane().add(txtNombreP);
+
+							txtEdadP.setText("Edad");
+							txtEdadP.setBounds(270, 250, 215, 35);
+							AñadirPaciente.getContentPane().add(txtEdadP);
+
+							txtCedulaP.setText("Cedula");
+							txtCedulaP.setBounds(495, 250, 215, 35);
+							AñadirPaciente.getContentPane().add(txtCedulaP);
+
+							GuardaPac.setText("Guardar");
+							AñadirPaciente.getContentPane().add(Volver);
+							AñadirPaciente.getContentPane().add(GuardaPac);
+
+							Volver.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									frame.setVisible(true);
+									AñadirPaciente.setVisible(false);
+								}
+							});
+							GuardaPac.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									if ((txtCedulaP.getText() != "" || !txtCedulaP.getText().equals("Cedula"))
+											&& (txtEdadP.getText() != "" || !txtEdadP.getText().equals("Edad"))
+											&& (txtNombreP.getText() != "" || !txtNombreP.getText().equals("Nombre"))
+											&& Guardar) {
+										H.addPaciente(txtNombreP.getText(), Integer.parseInt(txtEdadP.getText()),
+												txtCedulaP.getText());
+										Guardar = false;
+									}
+								}
+							});
+							txtNombreP.setText("Nombre");
+							txtEdadP.setText("Edad");
+							txtCedulaP.setText("Cedula");
 						}
 					});
 
 				}
-				if (Opciones.getSelectedItem().equals("Añadir Doctor")) {
-					
-					AñadirDoctor.setVisible(true);
-					frame.setVisible(false);
-					Guardar = true;
-					
-					AñadirDoctor.getContentPane().add(GuardaBuscar);
-					AñadirDoctor.getContentPane().add(Volver);
-					
-					txtNombre.setText("Nombre");
-					txtNombre.setBounds(45, 250, 215, 35);
-					AñadirDoctor.getContentPane().add(txtNombre);
-					
-					txtEdad.setText("Edad");
-					txtEdad.setBounds(270, 250, 215, 35);
-					AñadirDoctor.getContentPane().add(txtEdad);
-
-					txtCedula.setText("Cedula");
-					txtCedula.setBounds(495, 250, 215, 35);
-					AñadirDoctor.getContentPane().add(txtCedula);
-
-					txtEspecialidad.setText("Especialidad");
-					txtEspecialidad.setBounds(45, 310, 215, 35);
-					AñadirDoctor.getContentPane().add(txtEspecialidad);
-
-					GuardaBuscar.setText("Guardar");
-					
-					Volver.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent e) {
-							frame.setVisible(true);
-							AñadirDoctor.setVisible(false);
-						}
-					});
-					GuardaBuscar.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent e) {
-
-							if (txtCedula.getText() != "" && txtEdad.getText() != "" && txtEspecialidad.getText() != ""
-									&& txtNombre.getText() != "" && Guardar) {
-								H.addDoctor(txtNombre.getText(), txtCedula.getText(),
-										Integer.parseInt(txtEdad.getText()), txtEspecialidad.getText());
-								Guardar = false;
-							}
-						}
-					});
-				}
-				if (Opciones.getSelectedItem().equals("Programar Cita")) {
+//				} else if (Opciones.getSelectedItem().equals("Añadir Paciente")) {
+//					Guardar = true;
+//
+//					AñadirPaciente.setVisible(true);
+//					frame.setVisible(false);
+//
+//					txtNombreP.setText("Nombre");
+//					txtNombreP.setBounds(45, 250, 215, 35);
+//					AñadirPaciente.getContentPane().add(txtNombreP);
+//
+//					txtEdadP.setText("Edad");
+//					txtEdadP.setBounds(270, 250, 215, 35);
+//					AñadirPaciente.getContentPane().add(txtEdadP);
+//
+//					txtCedulaP.setText("Cedula");
+//					txtCedulaP.setBounds(495, 250, 215, 35);
+//					AñadirPaciente.getContentPane().add(txtCedulaP);
+//
+//					GuardaBuscar.setText("Guardar");
+//					AñadirPaciente.getContentPane().add(Volver);
+//					AñadirPaciente.getContentPane().add(GuardaBuscar);
+//
+//					Volver.addMouseListener(new MouseAdapter() {
+//						public void mouseClicked(MouseEvent e) {
+//							frame.setVisible(true);
+//							AñadirDoctor.setVisible(false);
+//						}
+//					});
+//					GuardaBuscar.addMouseListener(new MouseAdapter() {
+//						public void mouseClicked(MouseEvent e) {
+//							if ((txtCedulaP.getText() != "" || !txtCedulaP.getText().equals("Cedula"))
+//									&& (txtEdadP.getText() != "" || !txtEdadP.getText().equals("Edad"))
+//									&& (txtNombreP.getText() != "" || !txtNombreP.getText().equals("Nombre"))
+//									&& Guardar) {
+//								H.addPaciente(txtNombreP.getText(), Integer.parseInt(txtEdadP.getText()),
+//										txtCedulaP.getText());
+//								Guardar = false;
+//							}
+//						}
+//					});
+//					txtNombreP.setText("Nombre");
+//					txtEdadP.setText("Edad");
+//					txtCedulaP.setText("Cedula");
+//
+//				} else if (Opciones.getSelectedItem().equals("Añadir Doctor")) {
+//
+//					AñadirDoctor.setVisible(true);
+//					frame.setVisible(false);
+//					Guardar = true;
+//
+//					AñadirDoctor.getContentPane().add(GuardaBuscar);
+//					AñadirDoctor.getContentPane().add(Volver);
+//
+//					txtNombre.setText("Nombre");
+//					txtNombre.setBounds(45, 250, 215, 35);
+//					AñadirDoctor.getContentPane().add(txtNombre);
+//
+//					txtEdad.setText("Edad");
+//					txtEdad.setBounds(270, 250, 215, 35);
+//					AñadirDoctor.getContentPane().add(txtEdad);
+//
+//					txtCedula.setText("Cedula");
+//					txtCedula.setBounds(495, 250, 215, 35);
+//					AñadirDoctor.getContentPane().add(txtCedula);
+//
+//					txtEspecialidad.setText("Especialidad");
+//					txtEspecialidad.setBounds(45, 310, 215, 35);
+//					AñadirDoctor.getContentPane().add(txtEspecialidad);
+//
+//					GuardaBuscar.setText("Guardar");
+//
+//					Volver.addMouseListener(new MouseAdapter() {
+//						public void mouseClicked(MouseEvent e) {
+//							frame.setVisible(true);
+//							AñadirDoctor.setVisible(false);
+//						}
+//					});
+//					GuardaBuscar.addMouseListener(new MouseAdapter() {
+//						public void mouseClicked(MouseEvent e) {
+//
+//							if ((txtCedula.getText() != "" || !txtCedula.getText().equals("Cedula"))
+//									&& (txtEdad.getText() != "" || !txtEdad.getText().equals("Edad"))
+//									&& (txtEspecialidad.getText() != ""
+//											|| !txtEspecialidad.getText().equals("Especialidad"))
+//									&& (txtNombre.getText() != "" || !txtNombre.getText().equals("Nombre"))
+//									&& Guardar) {
+//								H.addDoctor(txtNombre.getText(), txtCedula.getText(),
+//										Integer.parseInt(txtEdad.getText()), txtEspecialidad.getText());
+//								Guardar = false;
+//							}
+//						}
+//					});
+//					txtNombre.setText("Nombre");
+//					txtEdad.setText("Edad");
+//					txtCedula.setText("Cedula");
+//					txtEspecialidad.setText("Especialidad");
+//				} else if (Opciones.getSelectedItem().equals("Añadir Medicamento")) {
+				else if (Opciones.getSelectedItem().equals("Programar Cita")) {
 					ProgramarCita.setVisible(true);
 					frame.setVisible(false);
-					
-					ProgramarCita.getContentPane().add(GuardaBuscar);
+
+					ProgramarCita.getContentPane().add(Buscar);
 					ProgramarCita.getContentPane().add(Volver);
-					
+
+					DoctorBox.removeAllItems();
+					PacienteBox.removeAllItems();
+
+					DoctorBox.addItem("Doctor");
+					PacienteBox.addItem("Paciente");
+
 					for (Doctor D : H.getDoctores())
 						DoctorBox.addItem(D.getNombre());
 
@@ -345,8 +517,8 @@ public class Interfaz {
 							AñadirDoctor.setVisible(false);
 						}
 					});
-					GuardaBuscar.setText("Guardar");
-					GuardaBuscar.addMouseListener(new MouseAdapter() {
+					Buscar.setText("Guardar");
+					Buscar.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 						}
 					});
@@ -355,9 +527,9 @@ public class Interfaz {
 		});
 		Opciones.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		Opciones.setModel(
-				new DefaultComboBoxModel(new String[] { "", "Programar Cita", "Añadir Paciente", "Añadir Doctor" }));
+				new DefaultComboBoxModel(new String[] { "", "Programar Cita", "Añadir", "Añadir Medicamento" }));
 		frame.getContentPane().add(Opciones);
-		frame.getContentPane().add(GuardaBuscar);
-		
+		frame.getContentPane().add(Buscar);
+
 	}
 }
