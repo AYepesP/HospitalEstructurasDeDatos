@@ -1,6 +1,13 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.Date;
+
 enum Status {AGENDADA, CANCELADA, TERMINADA};
+
 public class Cita {
     private LocalDateTime fecha;
     private Doctor doctor;
@@ -96,4 +103,28 @@ public class Cita {
         this.notasAdicionales = notasAdicionales;
     }
 
+    public void writeObjeto(String adress) throws IOException{
+        FileOutputStream f = new FileOutputStream(adress);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
+    }
+
+    public void readObjeto(String adress) throws IOException, ClassNotFoundException{
+        FileInputStream in = new FileInputStream(adress);
+        ObjectInputStream o = new ObjectInputStream(in);
+        Cita citas = (Cita)o.readObject();
+        this.doctor = citas.doctor;
+        this.paciente = citas.paciente;
+        this.estado = citas.estado;
+        this.recordada = citas.recordada;
+        this.fecha=citas.fecha;
+        this.sintomas=citas.sintomas;
+        this.seguro=citas.seguro;
+        this.diagnostico=citas.diagnostico;
+        this.notasAdicionales=citas.notasAdicionales;
+        o.close();
+        in.close();
+    }
 }

@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class Doctor {
 	
 	private String Nombre;
@@ -50,6 +56,25 @@ public class Doctor {
 		Especialidad = especialidad;
 	}
 
+	public void writeObjeto(String adress) throws IOException {
+		FileOutputStream f = new FileOutputStream(adress);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
+	}
+
+	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
+		FileInputStream in = new FileInputStream(adress);
+		ObjectInputStream o = new ObjectInputStream(in);
+		Doctor doctor = (Doctor) o.readObject();
+		this.CC = doctor.CC;
+		this.Nombre = doctor.Nombre;
+		this.Edad = doctor.Edad;
+		this.Especialidad = doctor.Especialidad;
+		o.close();
+		in.close();
+	}
 	
 	
 	

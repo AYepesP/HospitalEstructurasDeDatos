@@ -1,15 +1,20 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Medicamento {
 	private String codigo;
 	private String nombre;
 	private int cantidadMg;
 	private String tipo;
-	private Date fechaVencimiento;
+	private LocalDateTime fechaVencimiento;
 	private String CUM;
 	
-	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
+	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVencimiento, String cUM) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -36,7 +41,7 @@ public class Medicamento {
 		return tipo;
 	}
 
-	public Date getFechaVencimiento() {
+	public LocalDateTime getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
@@ -56,7 +61,7 @@ public class Medicamento {
 		this.tipo = tipo;
 	}
 
-	public void setFechaVencimiento(Date fechaVencimiento) {
+	public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
@@ -64,45 +69,25 @@ public class Medicamento {
 		CUM = cUM;
 	}
 	
-	
-}
-class EHospital extends Exception{
-	public EHospital(String s){
-		super(s);
-	}
-}
-class Hospital {
-	private Doctor[] doctores;
-	private Paciente [] pacientes;
-	private Medicamento [] medicamentos;
-	private Cita[] citas;
-	
-	
-	public Hospital() {
-		super();
-		this.doctores = new Doctor[0];
-		this.pacientes = new Paciente[0];
-		this.medicamentos = new Medicamento[0];
-		this.citas = new Cita[0];
+	public void writeObjeto(String adress) throws IOException {
+		FileOutputStream f = new FileOutputStream(adress);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
 	}
 
-
-	public 	void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVencimiento, String cUM) {
-		Medicamento newMed = new Medicamento(codigo, nombre, cantidadMg, tipo, fechaVencimiento, cUM);
-		medicamentos=Arrays.copyOf(medicamentos, medicamentos.length+1);
-		medicamentos[medicamentos.length-1]=newMed;
-		
+	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
+		FileInputStream in = new FileInputStream(adress);
+		ObjectInputStream o = new ObjectInputStream(in);
+		Medicamento medicamento = (Medicamento) o.readObject();
+		this.nombre = medicamento.nombre;
+		this.cantidadMg = medicamento.cantidadMg;
+		this.tipo = medicamento.tipo;
+		this.fechaVencimiento = medicamento.fechaVencimiento;
+		this.CUM = medicamento.CUM;
+		o.close();
+		in.close();
 	}
-	
-	public Medicamento buscarMedIndex(String nombre, int cantMg) throws EHospital {
-		int i =0;
-		while(i<medicamentos.length && !medicamentos[i].getNombre().equals(nombre) && medicamentos[i].getCantidadMg()!=cantMg) {
-			i++;
-		}
-		if(i<medicamentos.length) {
-			return medicamentos[i];
-		}
-		throw new EHospital("El medicamento no se encuentra");
-	}
-	
 }
+

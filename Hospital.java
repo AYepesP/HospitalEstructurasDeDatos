@@ -1,7 +1,12 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class Hospital {
 
@@ -157,7 +162,7 @@ public class Hospital {
 		// Si al final no encontre la cita, es por que no existe.
 		throw new Exception("El paciente esta disponible a esta hora.  La cita no existe");		
 	}
-	public void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, Date fechaVen) {
+	public void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVen) {
 		Medicamento p = new Medicamento(codigo, nombre, cantidadMg, tipo, fechaVen, codigo);
 		Medicamentos = Arrays.copyOf(Medicamentos, Medicamentos.length + 1);
 		Medicamentos[Medicamentos.length - 1] = p;
@@ -194,5 +199,113 @@ public class Hospital {
 		} else {
 			throw new ENoExiste("El Medicamento no Existe");
 		}
+	}
+	public Medicamento buscarMedicamento(String nombre, int cantMg) throws ENoExiste {
+		int i =0;
+		while(i<Medicamentos.length && !Medicamentos[i].getNombre().equals(nombre) && Medicamentos[i].getCantidadMg()!=cantMg) {
+			i++;
+		}
+		if(i<Medicamentos.length) {
+			return Medicamentos[i];
+		}
+		throw new ENoExiste("El medicamento no se encuentra");
+	}
+
+	public void writePacientesObj(String file) throws FileNotFoundException, IOException {
+		for (int i = 0; i < Pacientes.length; i++) {
+			Pacientes[i].writeObjeto(file+"\\"+i+".paciente");
+		}
+	}
+	
+	public void readPacientesObj(String address) throws IOException, ClassNotFoundException {
+		File f = new File(address);
+		File[] listaF = f.listFiles(new Filtro(".paciente"));
+		if(listaF !=null) {
+			Pacientes = new Paciente[listaF.length];
+		for (int i = 0; i < listaF.length; i++) {
+			FileInputStream in = new FileInputStream(listaF[i]);
+			ObjectInputStream ois = new ObjectInputStream(in);
+			Pacientes[i] = (Paciente)ois.readObject();
+			ois.close();
+			in.close();
+		}
+		}
+	}
+	public void writeDoctoresObj(String file) throws FileNotFoundException, IOException {
+		for (int i = 0; i < Doctores.length; i++) {
+			Doctores[i].writeObjeto(file+"\\"+i+".doctor");
+		}
+	}
+	
+	public void readDoctoresObj(String address) throws IOException, ClassNotFoundException {
+		File f = new File(address);
+		File[] listaF = f.listFiles(new Filtro(".doctor"));
+			Doctores = new Doctor[listaF.length];
+		for (int i = 0; i < listaF.length; i++) {
+			FileInputStream in = new FileInputStream(listaF[i]);
+			ObjectInputStream ois = new ObjectInputStream(in);
+			Doctores[i] = (Doctor)ois.readObject();
+			ois.close();
+			in.close();
+		
+		}
+ 	}
+	
+	public void writeCitasObj(String file) throws FileNotFoundException, IOException {
+		for (int i = 0; i < Citas.size(); i++) {
+			Citas.get(i).writeObjeto(file+"\\"+i+".cita");
+		}
+		
+	}
+	
+	public void readCitasObj(String address) throws IOException, ClassNotFoundException {
+		File f = new File(address);
+		File[] listaF = f.listFiles(new Filtro(".cita"));
+		Citas = new ArrayList<Cita>();
+		if(listaF!=null) {
+		for (int i = 0; i < listaF.length; i++) {
+			FileInputStream in = new FileInputStream(listaF[i]);
+			ObjectInputStream ois = new ObjectInputStream(in);
+			Citas.add(i, (Cita)ois.readObject()); 
+			ois.close();
+			in.close();
+		}
+		}
+ 	}
+	
+	public void writeMedicamentosObj(String file) throws FileNotFoundException, IOException {
+		for (int i = 0; i < Medicamentos.length; i++) {
+			Medicamentos[i].writeObjeto(file+"\\"+i+".medic");
+		}
+		
+	}
+	
+	public void readMedicamentosObj(String address) throws IOException, ClassNotFoundException {
+		File f = new File(address);
+		File[] listaF = f.listFiles(new Filtro(".medic"));
+		if(listaF!=null) {
+		Medicamentos = new Medicamento[listaF.length];
+		for (int i = 0; i < listaF.length; i++) {
+			FileInputStream in = new FileInputStream(listaF[i]);
+			ObjectInputStream ois = new ObjectInputStream(in);
+			Medicamentos[i] = (Medicamento)ois.readObject();
+			ois.close();
+			in.close();
+		}
+		}
+ 	}
+}
+
+
+
+
+class Filtro implements FilenameFilter{
+	private String extension;
+	public Filtro(String extension) {
+		super();
+		this.extension=extension;	
+	}
+	public boolean accept(File ruta, String file) {
+		return file.endsWith(extension);
 	}
 }
