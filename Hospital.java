@@ -69,11 +69,11 @@ public class Hospital {
 	
 	public String Imprimir() {
 		String D = null;
-	for (int i = 0; i < Doctores.length; i++) {
-		System.out.println(Doctores[i].getNombre());
-		return D+=Doctores[i].getNombre();
-	}
-	return "";
+		for (int i = 0; i < Doctores.length; i++) {
+			System.out.println(Doctores[i].getNombre());
+			return D+=Doctores[i].getNombre();
+		}
+		return "";
 	}
 	
 	public void addCita(Paciente paciente, Doctor doctor, LocalDateTime fecha) throws ENoExiste {

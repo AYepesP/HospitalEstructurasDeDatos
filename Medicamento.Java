@@ -22,27 +22,6 @@ public class Medicamento {
 		CUM = cUM;
 	}
 
-	public void writeObjeto(String adress) throws IOException {
-		FileOutputStream f = new FileOutputStream(adress);
-		ObjectOutputStream o = new ObjectOutputStream(f);
-		o.writeObject(this);
-		o.close();
-		f.close();
-	}
-
-	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
-		FileInputStream in = new FileInputStream(adress);
-		ObjectInputStream o = new ObjectInputStream(in);
-		Medicamento medicamento = (Medicamento) o.readObject();
-		this.nombre = medicamento.nombre;
-		this.cantidadMg = medicamento.cantidadMg;
-		this.tipo = medicamento.tipo;
-		this.fechaVencimiento = medicamento.fechaVencimiento;
-		this.CUM = medicamento.CUM;
-		o.close();
-		in.close();
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
