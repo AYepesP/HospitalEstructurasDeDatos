@@ -14,8 +14,8 @@ public class Hospital {
 	private Doctor[] Doctores;
 	private ArrayList<Cita> Citas;
 	private Medicamento[] Medicamentos;
-
 	private String file= "C:\\Users\\user\\Desktop\\EIA\\Sistemas\\HospitalFichero";
+
 	public Hospital() {
 		Pacientes =new Paciente[0];
 		Doctores = new Doctor[0];
@@ -25,9 +25,11 @@ public class Hospital {
 			readDoctoresObj(file);
 			readMedicamentosObj(file);
 			readPacientesObj(file);
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) {
 			e.getMessage();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.getMessage();
 		}
 	}
@@ -38,9 +40,11 @@ public class Hospital {
 		Pacientes[Pacientes.length - 1] = p;
 			try {
 				writePacientesObj(file);
-			} catch (FileNotFoundException e) {
+			} 
+			catch (FileNotFoundException e) {
 				e.getMessage();
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				e.getMessage();
 			}
 	}
@@ -51,9 +55,11 @@ public class Hospital {
 		Doctores[Doctores.length - 1] = p;
 		try {
 			writeDoctoresObj(file);
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) {
 			e.getMessage();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.getMessage();
 		}
 		
@@ -80,11 +86,14 @@ public class Hospital {
 		Cita p = new Cita(paciente, doctor, fecha);
 		if (Citas.size() == 0) {
 			Citas.add(p);
-		} else if (Citas.get(Citas.size() - 1).getFecha().isAfter(fecha)) {
+		} 
+		else if (Citas.get(Citas.size() - 1).getFecha().isAfter(fecha)) {
 			Citas.add(p);
-		} else if (Citas.get(0).getFecha().isBefore(fecha)) {
+		} 
+		else if (Citas.get(0).getFecha().isBefore(fecha)) {
 			Citas.add(0, p);
-		} else {
+		} 
+		else {
 			int inicio = 0;
 			int fin = Citas.size();
 			int mitad = (fin + inicio) / 2;
@@ -92,10 +101,12 @@ public class Hospital {
 			while (fin - inicio > 1) {
 				if (Citas.get(mitad).getDoctor().equals(doctor) && Citas.get(mitad).getFecha().isEqual(fecha)) {
 					throw new ENoExiste("Doctor ocupado a esta hora.  Porfavor intente otra hora");
-				} else if (Citas.get(mitad).getFecha().isAfter(fecha)) {
+				} 
+				else if (Citas.get(mitad).getFecha().isAfter(fecha)) {
 					inicio = mitad;
 					mitad = (fin + inicio) / 2;
-				} else if (Citas.get(mitad).getFecha().isBefore(fecha)) {
+				} 
+				else if (Citas.get(mitad).getFecha().isBefore(fecha)) {
 					fin = mitad;
 					mitad = (fin + inicio) / 2;
 				}
@@ -104,9 +115,11 @@ public class Hospital {
 		}
 		try {
 			writeCitasObj(file);
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) {
 			e.getMessage();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			e.getMessage();
 		}
 	}
@@ -115,9 +128,11 @@ public class Hospital {
 		System.out.println(Citas.get(0).getFecha().isAfter(fecha));
 		if (doc == null) {
 			throw new Exception("El doctor no existe");
-		} else if (Citas.get(Citas.size() - 1).getFecha().isAfter(fecha)) {
+		} 
+		else if (Citas.get(Citas.size() - 1).getFecha().isAfter(fecha)) {
 			throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");
-		} else if (Citas.get(0).getFecha().isBefore(fecha)) {
+		} 
+		else if (Citas.get(0).getFecha().isBefore(fecha)) {
 			throw new Exception("El doctor esta disponible a esta hora.  La cita no existe");
 		}
 		int fin = Citas.size();
@@ -127,10 +142,12 @@ public class Hospital {
 		while (fin - inicio > 1) {
 			if (Citas.get(mitad).getDoctor().equals(doc) && Citas.get(mitad).getFecha().isEqual(fecha)) {
 				return Citas.get(mitad);
-			} else if (Citas.get(mitad).getFecha().isAfter(fecha)) {
+			} 
+			else if (Citas.get(mitad).getFecha().isAfter(fecha)) {
 				inicio = mitad;
 				mitad = (fin + inicio) / 2;
-			} else if (Citas.get(mitad).getFecha().isBefore(fecha)) {
+			} 
+			else if (Citas.get(mitad).getFecha().isBefore(fecha)) {
 				fin = mitad;
 				mitad = (fin + inicio) / 2;
 			}
@@ -174,6 +191,8 @@ public class Hospital {
 		// Si al final no encontre la cita, es por que no existe.
 		throw new Exception("El paciente esta disponible a esta hora.  La cita no existe");		
 	}
+	
+	// Falta guardar en el fichero.
 	public void addMedicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVen) {
 		Medicamento p = new Medicamento(codigo, nombre, cantidadMg, tipo, fechaVen, codigo);
 		Medicamentos = Arrays.copyOf(Medicamentos, Medicamentos.length + 1);
@@ -182,11 +201,11 @@ public class Hospital {
 
 	public Paciente buscarPaciente(String CC) throws ENoExiste {
 		int i = 0;
-		while (i < Pacientes.length && !Pacientes[i++].getCC().equals(CC))
-			;
+		while (i < Pacientes.length && !Pacientes[i++].getCC().equals(CC));
 		if (i <= Pacientes.length) {
 			return Pacientes[i - 1];
-		} else {
+		} 
+		else {
 			throw new ENoExiste("El Paciente no Existe");
 		}
 	}
@@ -196,18 +215,19 @@ public class Hospital {
 		while (i < Doctores.length && !Doctores[i++].getCC().equals(CC));
 		if (i <= Doctores.length) {
 			return Doctores[i-1];
-		} else {
+		} 
+		else {
 			throw new ENoExiste("El Doctor no Existe");
 		}
 	}
 
 	public Medicamento buscarMedicamento(String Codigo) throws ENoExiste {
 		int i = 0;
-		while (i < Medicamentos.length && !Medicamentos[i++].getCUM().equals(Codigo))
-			;
+		while (i < Medicamentos.length && !Medicamentos[i++].getCUM().equals(Codigo));
 		if (i <= Medicamentos.length) {
 			return Medicamentos[i - 1];
-		} else {
+		} 
+		else {
 			throw new ENoExiste("El Medicamento no Existe");
 		}
 	}
@@ -231,15 +251,13 @@ public class Hospital {
 	public void readPacientesObj(String address) throws IOException, ClassNotFoundException {
 		File f = new File(address);
 		File[] listaF = f.listFiles(new Filtro(".paciente"));
-		if(listaF !=null) {
-			Pacientes = new Paciente[listaF.length];
+		Pacientes = new Paciente[listaF.length];
 		for (int i = 0; i < listaF.length; i++) {
 			FileInputStream in = new FileInputStream(listaF[i]);
 			ObjectInputStream ois = new ObjectInputStream(in);
-			Pacientes[i] = (Paciente)ois.readObject();
+			Pacientes[i] = (Paciente) ois.readObject();
 			ois.close();
 			in.close();
-		}
 		}
 	}
 	public void writeDoctoresObj(String file) throws FileNotFoundException, IOException {
@@ -251,14 +269,13 @@ public class Hospital {
 	public void readDoctoresObj(String address) throws IOException, ClassNotFoundException {
 		File f = new File(address);
 		File[] listaF = f.listFiles(new Filtro(".doctor"));
-			Doctores = new Doctor[listaF.length];
+		Doctores = new Doctor[listaF.length];
 		for (int i = 0; i < listaF.length; i++) {
 			FileInputStream in = new FileInputStream(listaF[i]);
 			ObjectInputStream ois = new ObjectInputStream(in);
 			Doctores[i] = (Doctor)ois.readObject();
 			ois.close();
 			in.close();
-		
 		}
  	}
 	
@@ -273,14 +290,12 @@ public class Hospital {
 		File f = new File(address);
 		File[] listaF = f.listFiles(new Filtro(".cita"));
 		Citas = new ArrayList<Cita>();
-		if(listaF!=null) {
 		for (int i = 0; i < listaF.length; i++) {
 			FileInputStream in = new FileInputStream(listaF[i]);
 			ObjectInputStream ois = new ObjectInputStream(in);
-			Citas.add(i, (Cita)ois.readObject()); 
+			Citas.add((Cita)ois.readObject()); 
 			ois.close();
 			in.close();
-		}
 		}
  	}
 	
@@ -294,7 +309,6 @@ public class Hospital {
 	public void readMedicamentosObj(String address) throws IOException, ClassNotFoundException {
 		File f = new File(address);
 		File[] listaF = f.listFiles(new Filtro(".medic"));
-		if(listaF!=null) {
 		Medicamentos = new Medicamento[listaF.length];
 		for (int i = 0; i < listaF.length; i++) {
 			FileInputStream in = new FileInputStream(listaF[i]);
@@ -302,7 +316,6 @@ public class Hospital {
 			Medicamentos[i] = (Medicamento)ois.readObject();
 			ois.close();
 			in.close();
-		}
 		}
  	}
 }

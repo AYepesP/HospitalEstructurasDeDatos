@@ -27,7 +27,6 @@ public class Cita {
         this.recordada = false;
     }
 
-
     public LocalDateTime getFecha() {
         return this.fecha;
     }
@@ -110,11 +109,12 @@ public class Cita {
         o.close();
         f.close();
     }
-
+    // Aca deberia de ir un File, no un String
     public void readObjeto(String adress) throws IOException, ClassNotFoundException{
         FileInputStream in = new FileInputStream(adress);
         ObjectInputStream o = new ObjectInputStream(in);
         Cita citas = (Cita)o.readObject();
+        
         this.doctor = citas.doctor;
         this.paciente = citas.paciente;
         this.estado = citas.estado;

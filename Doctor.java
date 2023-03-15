@@ -63,7 +63,7 @@ public class Doctor {
 		o.close();
 		f.close();
 	}
-
+	// Aca deberia de ir un File, no un String
 	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
 		FileInputStream in = new FileInputStream(adress);
 		ObjectInputStream o = new ObjectInputStream(in);

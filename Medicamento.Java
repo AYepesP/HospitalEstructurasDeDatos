@@ -3,7 +3,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Arrays;
 import java.time.LocalDateTime;
 
 public class Medicamento {
@@ -13,12 +12,12 @@ public class Medicamento {
 	private LocalDateTime fechaVencimiento;
 	private String CUM;
 	
-	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVencimiento, String cUM) {
+	public Medicamento(String codigo, String nombre, int cantidadMg, String tipo, LocalDateTime fechaVencimiento, String cUM) throws ENoExiste{
 		super();
 		this.nombre = nombre;
 		this.cantidadMg = cantidadMg;
 		this.tipo = tipo;
-		this.fechaVencimiento = fechaVencimiento;
+		setFechaVencimiento(fechaVencimiento);
 		CUM = cUM;
 	}
 
@@ -46,7 +45,10 @@ public class Medicamento {
 		this.nombre = nombre;
 	}
 
-	public void setCantidadMg(int cantidadMg) {
+	public void setCantidadMg(int cantidadMg) throws ENoExiste{
+		if (cantidadMg < 1) {
+			throw new ENoExiste("Cantidad de Miligramos invalida");
+		}
 		this.cantidadMg = cantidadMg;
 	}
 
@@ -54,7 +56,12 @@ public class Medicamento {
 		this.tipo = tipo;
 	}
 
-	public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
+	public void setFechaVencimiento(LocalDateTime fechaVencimiento) throws ENoExiste{
+		if (fechaVencimiento.getYear() < 1900 ||  fechaVencimiento.getMonthValue() < 0 || fechaVencimiento.getDayOfMonth() > 31 || 
+		fechaVencimiento.getDayOfMonth() < 0 || fechaVencimiento.getHour() > 24 || fechaVencimiento.getHour() < 0 || fechaVencimiento.getMinute() < 0 ||
+		fechaVencimiento.getMinute() > 60) {
+			throw new ENoExiste("Fecha de vencimiento invalida");
+		}
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
@@ -69,7 +76,7 @@ public class Medicamento {
 		o.close();
 		f.close();
 	}
-
+	// Deberia de ser File
 	public void readObjeto(String adress) throws IOException, ClassNotFoundException {
 		FileInputStream in = new FileInputStream(adress);
 		ObjectInputStream o = new ObjectInputStream(in);
